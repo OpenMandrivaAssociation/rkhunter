@@ -1,6 +1,6 @@
 Summary: Rootkit scans for rootkits, backdoors and local exploits
 Name: rkhunter
-Version: 1.2.8
+Version: 1.2.9
 Release: %mkrel 1
 Source0: http://downloads.rootkit.nl/%{name}-%{version}.tar.bz2
 License: GPL
@@ -22,7 +22,7 @@ exploits by running tests like:
 	- Optional scan within plaintext and binary files
 
 %prep
-%setup -q -n %name
+%setup -q 
 chmod -R a+r .
 
 %install
@@ -31,21 +31,26 @@ mkdir -p $RPM_BUILD_ROOT%_sysconfdir $RPM_BUILD_ROOT%_sbindir \
  $RPM_BUILD_ROOT%_var/lib/%name/db  $RPM_BUILD_ROOT%_var/lib/%name/scripts \
  $RPM_BUILD_ROOT%_var/lib/%name/tmp \
  $RPM_BUILD_ROOT%_mandir/man8
-install files/rkhunter $RPM_BUILD_ROOT%_sbindir/
-install -m 644 files/rkhunter.conf $RPM_BUILD_ROOT%_sysconfdir
-echo "INSTALLDIR=%_var" >> $RPM_BUILD_ROOT%_sysconfdir/rkhunter.conf
+install files/%name $RPM_BUILD_ROOT%_sbindir/
+install -m 644 files/%name.conf $RPM_BUILD_ROOT%_sysconfdir
+echo "INSTALLDIR=%_var" >> $RPM_BUILD_ROOT%_sysconfdir/%name.conf
 install -m 644 files/*.dat $RPM_BUILD_ROOT%_var/lib/%name/db
 install -m 754 files/*.{pl,sh} $RPM_BUILD_ROOT%_var/lib/%name/scripts
-install -m 644 files/development/rkhunter.8 $RPM_BUILD_ROOT%_mandir/man8
+install -m 644 files/development/%name.8 $RPM_BUILD_ROOT%_mandir/man8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+#fix previous broken < 1.2.8 installs.
+source %_sysconfdir/%name.conf ; if [ "$INSTALLDIR" != "%_var" ]; then
+ echo "INSTALLDIR=%_var" >> %_sysconfdir/%name.conf ;
+fi
+
 %files
 %defattr(-,root,root)
 %doc files/CHANGELOG files/README files/WISHLIST
-%config(noreplace) %_sysconfdir/rkhunter.conf
+%config(noreplace) %_sysconfdir/%name.conf
 %_sbindir/*
 %_var/lib/%{name}
 %_mandir/man8/*
-

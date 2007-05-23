@@ -6,7 +6,7 @@ Source0: http://downloads.rootkit.nl/%{name}-%{version}.tar.bz2
 License: GPL
 URL: http://www.rootkit.nl/projects/rootkit_hunter.html
 Group: System/Configuration/Other
-Requires: webfetch e2fsprogs binutils
+Requires: webfetch e2fsprogs binutils ccp
 BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildArch: noarch
 
@@ -43,9 +43,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 #fix previous broken < 1.2.8 installs.
-source %_sysconfdir/%name.conf ; if [ "$INSTALLDIR" != "%_var" ]; then
- echo "INSTALLDIR=%_var" >> %_sysconfdir/%name.conf ;
-fi
+ccp --delete --ifexists --set NoOrphans \
+ --ignoreopt TMPDIR --ignoreopt DBDIR \
+ --oldfile %_sysconfdir/%name.conf \
+ --newfile %_sysconfdir/%name.conf.rpmnew
 
 %files
 %defattr(-,root,root)

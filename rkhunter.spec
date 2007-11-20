@@ -1,12 +1,15 @@
 Summary: Rootkit scans for rootkits, backdoors and local exploits
 Name: rkhunter
-Version: 1.2.9
+Version: 1.3.0
 Release: %mkrel 1
-Source0: http://downloads.rootkit.nl/%{name}-%{version}.tar.bz2
-License: GPL
+Source0: http://downloads.rootkit.nl/%{name}-%{version}.tar.gz
+License: GPLv2+
 URL: http://www.rootkit.nl/projects/rootkit_hunter.html
 Group: System/Configuration/Other
-Requires: webfetch e2fsprogs binutils ccp
+Requires: webfetch
+Requires: e2fsprogs
+Requires: binutils
+Requires: ccp
 BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildArch: noarch
 
@@ -26,20 +29,20 @@ exploits by running tests like:
 chmod -R a+r .
 
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT%_sysconfdir $RPM_BUILD_ROOT%_sbindir \
- $RPM_BUILD_ROOT%_var/lib/%name/db  $RPM_BUILD_ROOT%_var/lib/%name/scripts \
- $RPM_BUILD_ROOT%_var/lib/%name/tmp \
- $RPM_BUILD_ROOT%_mandir/man8
-install files/%name $RPM_BUILD_ROOT%_sbindir/
-install -m 644 files/%name.conf $RPM_BUILD_ROOT%_sysconfdir
-echo "INSTALLDIR=%_var" >> $RPM_BUILD_ROOT%_sysconfdir/%name.conf
-install -m 644 files/*.dat $RPM_BUILD_ROOT%_var/lib/%name/db
-install -m 754 files/*.{pl,sh} $RPM_BUILD_ROOT%_var/lib/%name/scripts
-install -m 644 files/development/%name.8 $RPM_BUILD_ROOT%_mandir/man8
+rm -rf %{buildroot}
+mkdir -p %{buildroot}%_sysconfdir %{buildroot}%_sbindir \
+ %{buildroot}%_var/lib/%name/db  %{buildroot}%_var/lib/%name/scripts \
+ %{buildroot}%_var/lib/%name/tmp \
+ %{buildroot}%_mandir/man8
+install files/%name %{buildroot}%_sbindir/
+install -m 644 files/%name.conf %{buildroot}%_sysconfdir
+echo "INSTALLDIR=%_var" >> %{buildroot}%_sysconfdir/%name.conf
+install -m 644 files/*.dat %{buildroot}%_var/lib/%name/db
+install -m 754 files/*.{pl,sh} %{buildroot}%_var/lib/%name/scripts
+install -m 644 files/development/%name.8 %{buildroot}%_mandir/man8
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post
 #fix previous broken < 1.2.8 installs.

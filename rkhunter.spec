@@ -39,7 +39,7 @@ install -m 644 files/%name.conf %{buildroot}%_sysconfdir
 echo "INSTALLDIR=%_var" >> %{buildroot}%_sysconfdir/%name.conf
 install -m 644 files/*.dat %{buildroot}%_var/lib/%name/db
 install -m 754 files/*.{pl,sh} %{buildroot}%_var/lib/%name/scripts
-install -m 644 files/development/%name.8 %{buildroot}%_mandir/man8
+install -m 644 files/%name.8 %{buildroot}%_mandir/man8
 
 %clean
 rm -rf %{buildroot}

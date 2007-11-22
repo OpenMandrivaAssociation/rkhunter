@@ -1,7 +1,7 @@
 Summary: Rootkit scans for rootkits, backdoors and local exploits
 Name: rkhunter
 Version: 1.3.0
-Release: %mkrel 1
+Release: %mkrel 2
 Source0: http://downloads.rootkit.nl/%{name}-%{version}.tar.gz
 License: GPLv2+
 URL: http://www.rootkit.nl/projects/rootkit_hunter.html
@@ -31,13 +31,15 @@ chmod -R a+r .
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}%_sysconfdir %{buildroot}%_sbindir \
- %{buildroot}%_var/lib/%name/db  %{buildroot}%_var/lib/%name/scripts \
+ %{buildroot}%_var/lib/%name/db/i18n  %{buildroot}%_var/lib/%name/scripts \
  %{buildroot}%_var/lib/%name/tmp \
  %{buildroot}%_mandir/man8
 install files/%name %{buildroot}%_sbindir/
 install -m 644 files/%name.conf %{buildroot}%_sysconfdir
 echo "INSTALLDIR=%_var" >> %{buildroot}%_sysconfdir/%name.conf
+echo "SCRIPTDIR=%_var/lib/%{name}/scripts" >> %{buildroot}%_sysconfdir/%name.conf
 install -m 644 files/*.dat %{buildroot}%_var/lib/%name/db
+install -m 644 files/i18n/* %{buildroot}%_var/lib/%name/db/i18n
 install -m 754 files/*.{pl,sh} %{buildroot}%_var/lib/%name/scripts
 install -m 644 files/%name.8 %{buildroot}%_mandir/man8
 

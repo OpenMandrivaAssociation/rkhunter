@@ -10,6 +10,7 @@ Requires: webfetch
 Requires: e2fsprogs
 Requires: binutils
 Requires: ccp
+BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildArch: noarch
 
 %description

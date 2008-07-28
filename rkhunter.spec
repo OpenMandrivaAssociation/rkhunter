@@ -1,7 +1,7 @@
 Summary: Rootkit scans for rootkits, backdoors and local exploits
 Name: rkhunter
 Version: 1.3.2
-Release: %mkrel 2
+Release: %mkrel 4
 Source0: http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz
 License: GPLv2+
 URL: http://www.rootkit.nl/projects/rootkit_hunter.html

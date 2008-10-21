@@ -1,17 +1,20 @@
-Summary: Rootkit scans for rootkits, backdoors and local exploits
-Name: rkhunter
-Version: 1.3.2
-Release: %mkrel 5
-Source0: http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz
-License: GPLv2+
-URL: http://www.rootkit.nl/projects/rootkit_hunter.html
-Group: System/Configuration/Other
-Requires: webfetch
-Requires: e2fsprogs
-Requires: binutils
-#Requires: ccp
-BuildRoot: %{_tmppath}/%{name}-buildroot
-BuildArch: noarch
+Name:			rkhunter
+Version:		1.3.2
+Release:		%mkrel 5
+
+Summary:	Rootkit scans for rootkits, backdoors and local exploits
+License:	GPLv2+
+Group:		System/Configuration/Other
+URL:		http://www.rootkit.nl/projects/rootkit_hunter.html
+Source0:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz
+Source1:	rkhunter.cron
+BuildRoot:	%{_tmppath}/%{name}-%{version}
+
+BuildArch:	noarch
+Requires:	webfetch
+Requires:	e2fsprogs
+Requires:	binutils
+#Requires:	ccp
 
 %description
 Rootkit scanner is scanning tool to ensure you you're clean of known nasty 
@@ -34,15 +37,14 @@ chmod -R a+r .
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}%_sysconfdir %{buildroot}%_sbindir \
- %{buildroot}%_var/lib/%name/db/i18n  %{buildroot}%_var/lib/%name/scripts \
- %{buildroot}%_var/lib/%name/tmp \
+ %{buildroot}%_var/lib/rkhunter/{db/i18n,scripts,tmp} \
  %{buildroot}%_mandir/man8
-install files/%name %{buildroot}%_sbindir/
+install files/rkhunter %{buildroot}%_sbindir/
 install -m 644 files/%name.conf %{buildroot}%_sysconfdir
-cat<<EOF>>%{buildroot}%_sysconfdir/%name.conf
+cat<<EOF>>%{buildroot}%_sysconfdir/rkhunter.conf
 INSTALLDIR=%_var
-SCRIPTDIR=%_var/lib/%{name}/scripts
-PKGMGR=RPM
+SCRIPTDIR=%_var/lib/rkhunter/scripts
+# PKGMGR=RPM
 # to avoid some false positives...
 ALLOWDEVFILE=/dev/shm/pulse-shm-*
 ALLOWHIDDENFILE=/usr/share/man/man1/..1.lzma
@@ -60,27 +62,37 @@ SCRIPTWHITELIST=/sbin/ifup
 SCRIPTWHITELIST=/sbin/ifdown
 EOF
 
-install -m 644 files/*.dat %{buildroot}%_var/lib/%name/db
-install -m 644 files/i18n/* %{buildroot}%_var/lib/%name/db/i18n
-install -m 754 files/*.{pl,sh} %{buildroot}%_var/lib/%name/scripts
-install -m 644 files/%name.8 %{buildroot}%_mandir/man8
+install -m 644 files/*.dat %{buildroot}%_var/lib/rkhunter/db
+install -m 644 files/i18n/* %{buildroot}%_var/lib/rkhunter/db/i18n
+install -m 754 files/*.{pl,sh} %{buildroot}%_var/lib/rkhunter/scripts
+install -m 644 files/rkhunter.8 %{buildroot}%_mandir/man8
+
+%{__mkdir_p} %{buildroot}%{_sysconfdir}/cron.daily
+%{__install} -m 0755 %{_sourcedir}/rkhunter.cron %{buildroot}%{_sysconfdir}/cron.daily/rkhunter
+
 
 %clean
 rm -rf %{buildroot}
 
 %post
+if [ $1 = 1 ]; then
+    # create rkhunter.dat
+    /usr/sbin/rkhunter --propupd
+fi
+
 #unfortunately, multiple ALLOW* and SCRIPT* keys forbids use of ccp
 #until it supports the feature...
 ##fix previous broken < 1.2.8 installs.
 #ccp --delete --ifexists --set NoOrphans \
 # --ignoreopt TMPDIR --ignoreopt DBDIR \
-# --oldfile %_sysconfdir/%name.conf \
-# --newfile %_sysconfdir/%name.conf.rpmnew
+# --oldfile %_sysconfdir/rkhunter.conf \
+# --newfile %_sysconfdir/rkhunter.conf.rpmnew
 
 %files
 %defattr(-,root,root)
 %doc files/CHANGELOG files/README files/WISHLIST
-%config(noreplace) %_sysconfdir/%name.conf
+%config(noreplace) %_sysconfdir/rkhunter.conf
+%{_sysconfdir}/cron.daily/rkhunter
 %_sbindir/*
-%_var/lib/%{name}
+%_var/lib/rkhunter
 %_mandir/man8/*

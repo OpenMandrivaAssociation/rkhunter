@@ -82,7 +82,9 @@ rm -rf %{buildroot}
 %post
 if [ $1 = 1 ]; then
     # create rkhunter.dat
-    /usr/sbin/rkhunter --propupd
+    %_sbindir /rkhunter --propupd
+    # gather user / group info
+    %_sbindir /rkhunter --enable group_changes,passwd_changes
 fi
 
 #unfortunately, multiple ALLOW* and SCRIPT* keys forbids use of ccp

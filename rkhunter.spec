@@ -1,6 +1,6 @@
 Name:			rkhunter
 Version:		1.3.2
-Release:		%mkrel 6
+Release:		%mkrel 7
 
 Summary:	Rootkit scans for rootkits, backdoors and local exploits
 License:	GPLv2+
@@ -28,23 +28,20 @@ tests like:
  - Look for hidden files
  - Optional scan within plaintext and binary files
 
-To benefit from all the features, you have to run "rkhunter --propupd" to 
-generate the rkhunter.dat file.
-
 %prep
 %setup -q 
 chmod -R a+r .
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}%_sysconfdir %{buildroot}%_sbindir \
- %{buildroot}%_var/lib/rkhunter/{db/i18n,scripts,tmp} \
- %{buildroot}%_mandir/man8
-install files/rkhunter %{buildroot}%_sbindir/
-install -m 644 files/%name.conf %{buildroot}%_sysconfdir
-cat<<EOF>>%{buildroot}%_sysconfdir/rkhunter.conf
-INSTALLDIR=%_var
-SCRIPTDIR=%_var/lib/rkhunter/scripts
+mkdir -p %{buildroot}%{_sysconfdir} %{buildroot}%{_sbindir} \
+ %{buildroot}%{_var}/lib/rkhunter/{db/i18n,scripts,tmp} \
+ %{buildroot}%{_mandir}/man8
+install files/rkhunter %{buildroot}%{_sbindir}/
+install -m 644 files/%{name}.conf %{buildroot}%{_sysconfdir}
+cat<<EOF>>%{buildroot}%{_sysconfdir}/rkhunter.conf
+INSTALLDIR=%{_var}
+SCRIPTDIR=%{_var}/lib/rkhunter/scripts
 # PKGMGR=RPM
 # to avoid some false positives...
 ALLOWDEVFILE=/dev/shm/pulse-shm-*
@@ -63,10 +60,10 @@ SCRIPTWHITELIST=/sbin/ifup
 SCRIPTWHITELIST=/sbin/ifdown
 EOF
 
-install -m 644 files/*.dat %{buildroot}%_var/lib/rkhunter/db
-install -m 644 files/i18n/* %{buildroot}%_var/lib/rkhunter/db/i18n
-install -m 754 files/*.{pl,sh} %{buildroot}%_var/lib/rkhunter/scripts
-install -m 644 files/rkhunter.8 %{buildroot}%_mandir/man8
+install -m 644 files/*.dat %{buildroot}%{_var}/lib/rkhunter/db
+install -m 644 files/i18n/* %{buildroot}%{_var}/lib/rkhunter/db/i18n
+install -m 754 files/*.{pl,sh} %{buildroot}%{_var}/lib/rkhunter/scripts
+install -m 644 files/rkhunter.8 %{buildroot}%{_mandir}/man8
 
 %{__mkdir_p} %{buildroot}%{_sysconfdir}/cron.daily
 %{__install} -m 0755 %{_sourcedir}/rkhunter.cron \
@@ -82,9 +79,9 @@ rm -rf %{buildroot}
 %post
 if [ $1 = 1 ]; then
     # create rkhunter.dat
-    %_sbindir /rkhunter --propupd
+    %{_sbindir}/rkhunter --propupd
     # gather user / group info
-    %_sbindir /rkhunter --enable group_changes,passwd_changes
+    %{_sbindir}/rkhunter --enable group_changes,passwd_changes
 fi
 
 #unfortunately, multiple ALLOW* and SCRIPT* keys forbids use of ccp
@@ -92,14 +89,15 @@ fi
 ##fix previous broken < 1.2.8 installs.
 #ccp --delete --ifexists --set NoOrphans \
 # --ignoreopt TMPDIR --ignoreopt DBDIR \
-# --oldfile %_sysconfdir/rkhunter.conf \
-# --newfile %_sysconfdir/rkhunter.conf.rpmnew
+# --oldfile %{_sysconfdir}/rkhunter.conf \
+# --newfile %{_sysconfdir}/rkhunter.conf.rpmnew
 
 %files
 %defattr(-,root,root)
 %doc files/CHANGELOG files/README files/WISHLIST
-%config(noreplace) %_sysconfdir/rkhunter.conf
+%config(noreplace) %{_sysconfdir}/rkhunter.conf
 %{_sysconfdir}/cron.daily/rkhunter
-%_sbindir/*
-%_var/lib/rkhunter
-%_mandir/man8/*
+%{_sysconfdir}/logrotate.d/rkhunter
+%{_sbindir}/*
+%{_var}/lib/rkhunter
+%{_mandir}/man8/*

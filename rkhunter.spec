@@ -8,6 +8,7 @@ Group:		System/Configuration/Other
 URL:		http://www.rootkit.nl/projects/rootkit_hunter.html
 Source0:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz
 Source1:	rkhunter.cron
+Source2:	rkhunter.logrotate
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 BuildArch:	noarch
@@ -68,8 +69,12 @@ install -m 754 files/*.{pl,sh} %{buildroot}%_var/lib/rkhunter/scripts
 install -m 644 files/rkhunter.8 %{buildroot}%_mandir/man8
 
 %{__mkdir_p} %{buildroot}%{_sysconfdir}/cron.daily
-%{__install} -m 0755 %{_sourcedir}/rkhunter.cron %{buildroot}%{_sysconfdir}/cron.daily/rkhunter
+%{__install} -m 0755 %{_sourcedir}/rkhunter.cron \
+ %{buildroot}%{_sysconfdir}/cron.daily/rkhunter
 
+%{__mkdir_p} %{buildroot}%{_sysconfdir}/logrotate.d
+%{__install} -m 0644 %{_sourcedir}/rkhunter.logrotate \
+ %{buildroot}%{_sysconfdir}/logrotate.d/rkhunter
 
 %clean
 rm -rf %{buildroot}

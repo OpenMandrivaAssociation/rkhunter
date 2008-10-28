@@ -1,6 +1,6 @@
 Name:			rkhunter
 Version:		1.3.2
-Release:		%mkrel 5
+Release:		%mkrel 6
 
 Summary:	Rootkit scans for rootkits, backdoors and local exploits
 License:	GPLv2+

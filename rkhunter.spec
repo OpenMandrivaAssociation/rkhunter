@@ -1,6 +1,6 @@
 Name:			rkhunter
 Version:		1.3.4
-Release:		%mkrel 1
+Release:		%mkrel 2
 
 Summary:	Rootkit scans for rootkits, backdoors and local exploits
 License:	GPLv2+
@@ -45,6 +45,8 @@ SCRIPTDIR=%{_var}/lib/rkhunter/scripts
 # PKGMGR=RPM
 # to avoid some false positives...
 ALLOWDEVFILE=/dev/shm/pulse-shm-*
+ALLOWDEVFILE=/dev/shm/mono.*
+ALLOWHIDDENDIR=/dev/.udev
 ALLOWHIDDENFILE=/usr/share/man/man1/..1.lzma
 ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia-current-settings.1.lzma
 ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia-current-smi.1.lzma

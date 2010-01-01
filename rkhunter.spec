@@ -1,11 +1,11 @@
 Name:			rkhunter
-Version:		1.3.4
-Release:		%mkrel 3
+Version:		1.3.6
+Release:		%mkrel 1
 
 Summary:	Rootkit scans for rootkits, backdoors and local exploits
 License:	GPLv2+
 Group:		System/Configuration/Other
-URL:		http://www.rootkit.nl/projects/rootkit_hunter.html
+URL:		http://rkhunter.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz
 Source1:	rkhunter.cron
 Source2:	rkhunter.logrotate
@@ -96,7 +96,7 @@ fi
 
 %files
 %defattr(-,root,root)
-%doc files/CHANGELOG files/README files/WISHLIST
+%doc files/CHANGELOG files/README
 %config(noreplace) %{_sysconfdir}/rkhunter.conf
 %{_sysconfdir}/cron.daily/rkhunter
 %{_sysconfdir}/logrotate.d/rkhunter

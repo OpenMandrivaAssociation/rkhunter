@@ -1,6 +1,6 @@
 Name:			rkhunter
 Version:		1.3.6
-Release:		%mkrel 1
+Release:		%mkrel 2
 
 Summary:	Rootkit scans for rootkits, backdoors and local exploits
 License:	GPLv2+
@@ -16,6 +16,7 @@ Requires:	webfetch
 Requires:	e2fsprogs
 Requires:	binutils
 #Requires:	ccp
+Suggests:	unhide
 
 %description
 Rootkit scanner is scanning tool to ensure you you're clean of known nasty 

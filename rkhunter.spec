@@ -1,22 +1,30 @@
-Name:			rkhunter
-Version:		1.3.8
-Release:		%mkrel 1
+%if %mandriva_branch == Cooker
+# Cooker
+%define release %mkrel 2
+%else
+# Old distros
+%define subrel 1
+%define release %mkrel 0
+%endif
 
 Summary:	Rootkit scans for rootkits, backdoors and local exploits
+Name:		rkhunter
+Version:	1.3.8
+Release:	%release
 License:	GPLv2+
 Group:		System/Configuration/Other
 URL:		http://rkhunter.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz
-Source1:	rkhunter.cron
-Source2:	rkhunter.logrotate
-BuildRoot:	%{_tmppath}/%{name}-%{version}
-
+Source1:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz.asc
+Source2:	rkhunter.cron
+Source3:	rkhunter.logrotate
 BuildArch:	noarch
 Requires:	webfetch
 Requires:	e2fsprogs
 Requires:	binutils
 #Requires:	ccp
 Suggests:	unhide
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Rootkit scanner is scanning tool to ensure you you're clean of known nasty 

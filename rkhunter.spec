@@ -1,9 +1,9 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 2
+%define release %mkrel 3
 %else
 # Old distros
-%define subrel 1
+%define subrel 2
 %define release %mkrel 0
 %endif
 
@@ -18,11 +18,14 @@ Source0:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz
 Source1:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz.asc
 Source2:	rkhunter.cron
 Source3:	rkhunter.logrotate
+# Upstream in http://rkhunter.cvs.sourceforge.net/viewvc/rkhunter/rkhunter/files/rkhunter?r1=1.396&r2=1.397&view=patch
+Patch0:		rkhunter-1.3.8-file.patch
+# Upstream already.
+Patch1:		rkhunter-1.3.8-ifs.patch
 BuildArch:	noarch
-Requires:	webfetch
-Requires:	e2fsprogs
 Requires:	binutils
-#Requires:	ccp
+Requires:	e2fsprogs
+Requires:	webfetch
 Suggests:	unhide
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -38,7 +41,11 @@ tests like:
  - Optional scan within plaintext and binary files
 
 %prep
-%setup -q 
+
+%setup -q
+%patch0 -p1
+%patch1 -p1
+
 chmod -R a+r .
 
 %install
@@ -48,27 +55,46 @@ mkdir -p %{buildroot}%{_sysconfdir} %{buildroot}%{_sbindir} \
  %{buildroot}%{_mandir}/man8
 install files/rkhunter %{buildroot}%{_sbindir}/
 install -m 644 files/%{name}.conf %{buildroot}%{_sysconfdir}
+
 cat<<EOF>>%{buildroot}%{_sysconfdir}/rkhunter.conf
 INSTALLDIR=%{_var}
 SCRIPTDIR=%{_var}/lib/rkhunter/scripts
-# PKGMGR=RPM
+PKGMGR=RPM
 # to avoid some false positives...
 ALLOWDEVFILE=/dev/shm/pulse-shm-*
 ALLOWDEVFILE=/dev/shm/mono.*
+ALLOWHIDDENDIR="/etc/.java"
 ALLOWHIDDENDIR=/dev/.udev
-ALLOWHIDDENFILE=/usr/share/man/man1/..1.lzma
-ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia-current-settings.1.lzma
-ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia-current-smi.1.lzma
-ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia-current-xconfig.1.lzma
-ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia96xx-settings.1.lzma
-ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia96xx-xconfig.1.lzma
-ALLOWHIDDENFILE=/usr/share/man/man5/.k5login.5.lzma
+ALLOWHIDDENDIR=/dev/.udevdb
+ALLOWHIDDENDIR=/dev/.udev.tdb
+ALLOWHIDDENDIR=/dev/.static
+ALLOWHIDDENDIR=/dev/.initramfs
+ALLOWHIDDENDIR=/dev/.SRC-unix
+ALLOWHIDDENDIR=/dev/.mdadm
+ALLOWHIDDENDIR=/dev/.systemd
+ALLOWHIDDENDIR=/dev/.mount
+ALLOWHIDDENFILE=/usr/share/man/man1/..1%{_extension}
+ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia-current-settings.1%{_extension}
+ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia-current-smi.1%{_extension}
+ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia-current-xconfig.1%{_extension}
+ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia96xx-settings.1%{_extension}
+ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia96xx-xconfig.1%{_extension}
+ALLOWHIDDENFILE=/usr/share/man/man5/.k5login.5%{_extension}
+ALLOWHIDDENFILE=/usr/share/man/man5/.k5identity.5%{_extension}
 SCRIPTWHITELIST=/usr/bin/GET
 SCRIPTWHITELIST=/usr/bin/groups
 SCRIPTWHITELIST=/usr/bin/ldd
 SCRIPTWHITELIST=/usr/bin/whatis
 SCRIPTWHITELIST=/sbin/ifup
 SCRIPTWHITELIST=/sbin/ifdown
+ALLOWDEVFILE=/dev/shm/pulse-shm-*
+ALLOWDEVFILE=/dev/md/md-device-map
+# tomboy creates this one
+ALLOWDEVFILE="/dev/shm/mono.*"
+# created by libv4l
+ALLOWDEVFILE="/dev/shm/libv4l-*"
+# created by spice video
+ALLOWDEVFILE="/dev/shm/spice.*"
 EOF
 
 install -m 644 files/*.dat %{buildroot}%{_var}/lib/rkhunter/db
@@ -94,14 +120,6 @@ if [ $1 = 1 ]; then
     # gather user / group info
     %{_sbindir}/rkhunter --enable group_changes,passwd_changes
 fi
-
-#unfortunately, multiple ALLOW* and SCRIPT* keys forbids use of ccp
-#until it supports the feature...
-##fix previous broken < 1.2.8 installs.
-#ccp --delete --ifexists --set NoOrphans \
-# --ignoreopt TMPDIR --ignoreopt DBDIR \
-# --oldfile %{_sysconfdir}/rkhunter.conf \
-# --newfile %{_sysconfdir}/rkhunter.conf.rpmnew
 
 %files
 %defattr(-,root,root)

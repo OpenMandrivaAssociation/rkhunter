@@ -118,7 +118,7 @@ if [ $1 = 1 ]; then
     # create rkhunter.dat
     %{_sbindir}/rkhunter --propupd
     # gather user / group info
-    %{_sbindir}/rkhunter --enable group_changes,passwd_changes
+    echo "\r"|%{_sbindir}/rkhunter --enable group_changes,passwd_changes
 fi
 
 %files

@@ -3,8 +3,8 @@
 %define release %mkrel 3
 %else
 # Old distros
-%define subrel 2
-%define release %mkrel 0
+%define subrel 1
+%define release %mkrel 2
 %endif
 
 Summary:	Rootkit scans for rootkits, backdoors and local exploits

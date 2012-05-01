@@ -1,15 +1,15 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 3
+%define release %mkrel 1
 %else
 # Old distros
 %define subrel 1
-%define release %mkrel 2
+%define release %mkrel 0
 %endif
 
 Summary:	Rootkit scans for rootkits, backdoors and local exploits
 Name:		rkhunter
-Version:	1.3.8
+Version:	1.4.0
 Release:	%release
 License:	GPLv2+
 Group:		System/Configuration/Other
@@ -18,10 +18,6 @@ Source0:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz
 Source1:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz.asc
 Source2:	rkhunter.cron
 Source3:	rkhunter.logrotate
-# Upstream in http://rkhunter.cvs.sourceforge.net/viewvc/rkhunter/rkhunter/files/rkhunter?r1=1.396&r2=1.397&view=patch
-Patch0:		rkhunter-1.3.8-file.patch
-# Upstream already.
-Patch1:		rkhunter-1.3.8-ifs.patch
 BuildArch:	noarch
 Requires:	binutils
 Requires:	e2fsprogs
@@ -43,8 +39,6 @@ tests like:
 %prep
 
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 chmod -R a+r .
 

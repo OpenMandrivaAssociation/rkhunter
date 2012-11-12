@@ -1,0 +1,5 @@
+sources:
+  "rkhunter-1.4.0.tar.gz:"	22546370647b79abce783d2a2d29352843d1b617
+  "rkhunter-1.4.0.tar.gz.asc:"	c40e44bcf9a69421582b20f74fbe272dfd6397a4
+  "rkhunter.cron:"	feb3cb9c0231382fb45f5b3a3e4cf4174f3be360
+  "rkhunter.logrotate:"	f3f02e7841d52a66fb06889bf4c0957a025021d8

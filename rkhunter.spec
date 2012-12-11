@@ -124,3 +124,126 @@ fi
 %{_sbindir}/*
 %{_var}/lib/rkhunter
 %{_mandir}/man8/*
+
+
+%changelog
+* Tue May 01 2012 Oden Eriksson <oeriksson@mandriva.com> 1.4.0-1mdv2012.0
++ Revision: 794720
+- 1.4.0
+
+* Tue Jan 31 2012 Oden Eriksson <oeriksson@mandriva.com> 1.3.8-3
++ Revision: 770016
+- heh, 2011 needs the 2.1 release
+- it needs the enter key in %%post, so fix that...
+- sync slightly with fedora (rkhunter-1.3.8-13.fc17.src.rpm)
+- use %%{_extension} instead of hardcoding it (duh!)
+- added more annoying false positives (fedora)
+
+* Sun Feb 20 2011 Oden Eriksson <oeriksson@mandriva.com> 1.3.8-2
++ Revision: 638851
+- added backporting magic
+
+* Sat Nov 20 2010 Jani Välimaa <wally@mandriva.org> 1.3.8-1mdv2011.0
++ Revision: 599218
+- new version 1.3.8
+
+* Mon Aug 02 2010 Jani Välimaa <wally@mandriva.org> 1.3.6-2mdv2011.0
++ Revision: 565129
+- suggest unhide (see mdv #60455)
+
+* Fri Jan 01 2010 Emmanuel Andry <eandry@mandriva.org> 1.3.6-1mdv2010.1
++ Revision: 484719
+- New version 1.3.6
+
+* Mon Jun 01 2009 Guillaume Bedot <littletux@mandriva.org> 1.3.4-3mdv2010.0
++ Revision: 381936
+- Fix mdv bug #51310
+
+* Fri Feb 13 2009 Guillaume Bedot <littletux@mandriva.org> 1.3.4-2mdv2009.1
++ Revision: 340059
+- whitelist update
+
+* Sun Feb 08 2009 Frederik Himpe <fhimpe@mandriva.org> 1.3.4-1mdv2009.1
++ Revision: 338555
+- update to new version 1.3.4
+
+* Tue Oct 28 2008 Guillaume Bedot <littletux@mandriva.org> 1.3.2-7mdv2009.1
++ Revision: 297803
+- fix description, typos in post
+- avoid first warning about user / group
+- logrotate
+- do not overwrite previous log
+
+* Tue Oct 21 2008 Guillaume Bedot <littletux@mandriva.org> 1.3.2-5mdv2009.1
++ Revision: 296265
+- First try to fix bug #40266
+
+* Fri Aug 01 2008 Thierry Vignaud <tv@mandriva.org> 1.3.2-5mdv2009.0
++ Revision: 260240
+- rebuild
+
+* Mon Jul 28 2008 Thierry Vignaud <tv@mandriva.org> 1.3.2-4mdv2009.0
++ Revision: 251267
+- rebuild
+
+* Tue Mar 04 2008 Guillaume Bedot <littletux@mandriva.org> 1.3.2-1mdv2008.1
++ Revision: 178884
+- 1.3.2
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Thu Nov 22 2007 Guillaume Bedot <littletux@mandriva.org> 1.3.0-2mdv2008.1
++ Revision: 111089
+- added missing i18n files and SCRIPTDIR option
+
+* Tue Nov 20 2007 Adam Williamson <awilliamson@mandriva.org> 1.3.0-1mdv2008.1
++ Revision: 110811
+- fix manpage location in tarball
+- new release 1.3.0
+- small spec clean
+
+* Wed May 23 2007 Guillaume Bedot <littletux@mandriva.org> 1.2.9-1mdv2008.0
++ Revision: 30072
+- More adequate config update thanks to ccp.
+- 1.2.9 (thankks to lenny) + try to definitely fix #28571 and alike.
+
+
+* Thu Mar 16 2006 Guillaume Bedot <littletux@zarb.org> 1.2.8-1mdk
+- 1.2.8
+- avoid duplicated files
+- added man page
+
+* Sat Aug 06 2005 Gaetan Lehmann <glehmann@n4.mandriva.com> 1.2.7-1mdk
+- complete URL
+- use mkrel
+- fix config file (reported on expert mailing list)
+
+* Wed May 25 2005 Lenny Cartier <lenny@mandriva.com> 1.2.7-1mdk
+- 1.2.7
+
+* Wed May 11 2005 Lenny Cartier <lenny@mandriva.com> 1.2.6-1mdk
+- 1.2.6
+
+* Fri Feb 11 2005 Mandrakelinux Team <http://www.mandrakeexpert.com> 1.2.0-1mdk
+- New release 1.2.0
+
+* Tue Feb 08 2005 Mandrakelinux Team <http://www.mandrakeexpert.com> 1.1.9-1mdk
+- New release 1.1.9
+
+* Mon Aug 23 2004 Frederic Lepied <flepied@mandrakesoft.com> 1.1.6-2mdk
+- fixed update script path (Mario R. Pizzolanti)
+
+* Wed Aug 18 2004 Frederic Lepied <flepied@mandrakesoft.com> 1.1.6-1mdk
+- added missing requires
+- New release 1.1.6
+
+* Wed Jun 23 2004 Frederic Lepied <flepied@mandrakesoft.com> 1.1.1-1mdk
+- New release 1.1.1
+
+* Fri May 28 2004 Frederic Lepied <flepied@mandrakesoft.com> 1.0.9-1mdk
+- initial package
+

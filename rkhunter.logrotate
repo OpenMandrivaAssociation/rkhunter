@@ -1,0 +1,8 @@
+/var/log/rkhunter-cronjob.log {
+    create 640 root root
+    weekly
+    notifempty
+    missingok
+    compress
+    rotate 5
+}

@@ -1,0 +1,3 @@
+#!/bin/sh
+# rkhunter cron task
+/usr/sbin/rkhunter --update --rwo --tmpdir /var/lib/rkhunter/tmp --dbdir /var/lib/rkhunter/db --cronjob --logfile /var/log/rkhunter-cronjob.log --appendlog

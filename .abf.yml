@@ -1,2 +1,3 @@
 sources:
-  "rkhunter-1.4.0.tar.gz": 22546370647b79abce783d2a2d29352843d1b617
+  rkhunter-1.4.0.tar.gz: 22546370647b79abce783d2a2d29352843d1b617
+  rkhunter-1.4.0.tar.gz.asc: c40e44bcf9a69421582b20f74fbe272dfd6397a4

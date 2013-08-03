@@ -23,7 +23,6 @@ Requires:	binutils
 Requires:	e2fsprogs
 Requires:	webfetch
 Suggests:	unhide
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Rootkit scanner is scanning tool to ensure you you're clean of known nasty 
@@ -39,11 +38,9 @@ tests like:
 %prep
 
 %setup -q
-
 chmod -R a+r .
 
 %install
-rm -rf %{buildroot}
 mkdir -p %{buildroot}%{_sysconfdir} %{buildroot}%{_sbindir} \
  %{buildroot}%{_var}/lib/rkhunter/{db/i18n,scripts,tmp} \
  %{buildroot}%{_mandir}/man8
@@ -104,9 +101,6 @@ install -m 644 files/rkhunter.8 %{buildroot}%{_mandir}/man8
 %{__install} -m 0644 %{_sourcedir}/rkhunter.logrotate \
  %{buildroot}%{_sysconfdir}/logrotate.d/rkhunter
 
-%clean
-rm -rf %{buildroot}
-
 %post
 if [ $1 = 1 ]; then
     # create rkhunter.dat
@@ -116,7 +110,6 @@ if [ $1 = 1 ]; then
 fi
 
 %files
-%defattr(-,root,root)
 %doc files/CHANGELOG files/README
 %config(noreplace) %{_sysconfdir}/rkhunter.conf
 %{_sysconfdir}/cron.daily/rkhunter

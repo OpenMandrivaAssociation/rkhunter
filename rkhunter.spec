@@ -40,6 +40,8 @@ tests like:
 %setup -q
 chmod -R a+r .
 
+%build
+
 %install
 mkdir -p %{buildroot}%{_sysconfdir} %{buildroot}%{_sbindir} \
  %{buildroot}%{_var}/lib/rkhunter/{db/i18n,scripts,tmp} \
@@ -94,11 +96,11 @@ install -m 754 files/*.{pl,sh} %{buildroot}%{_var}/lib/rkhunter/scripts
 install -m 644 files/rkhunter.8 %{buildroot}%{_mandir}/man8
 
 %{__mkdir_p} %{buildroot}%{_sysconfdir}/cron.daily
-%{__install} -m 0755 %{_sourcedir}/rkhunter.cron \
+%{__install} -m 0755 %{SOURCE2} \
  %{buildroot}%{_sysconfdir}/cron.daily/rkhunter
 
 %{__mkdir_p} %{buildroot}%{_sysconfdir}/logrotate.d
-%{__install} -m 0644 %{_sourcedir}/rkhunter.logrotate \
+%{__install} -m 0644 %{SOURCE3} \
  %{buildroot}%{_sysconfdir}/logrotate.d/rkhunter
 
 %post

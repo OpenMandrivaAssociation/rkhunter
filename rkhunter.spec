@@ -1,16 +1,7 @@
-%if %mandriva_branch == Cooker
-# Cooker
-%define release %mkrel 1
-%else
-# Old distros
-%define subrel 1
-%define release %mkrel 0
-%endif
-
 Summary:	Rootkit scans for rootkits, backdoors and local exploits
 Name:		rkhunter
 Version:	1.4.0
-Release:	%release
+Release:	2
 License:	GPLv2+
 Group:		System/Configuration/Other
 URL:		http://rkhunter.sourceforge.net/
@@ -109,6 +100,9 @@ if [ $1 = 1 ]; then
     %{_sbindir}/rkhunter --propupd
     # gather user / group info
     echo "\r"|%{_sbindir}/rkhunter --enable group_changes,passwd_changes
+    # Suppress warning on fresh install because of missing copies of passwd 
+    # and groups file above
+    /bin/true
 fi
 
 %files

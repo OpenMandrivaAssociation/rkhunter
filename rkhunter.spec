@@ -1,6 +1,6 @@
 Summary:	Rootkit scans for rootkits, backdoors and local exploits
 Name:		rkhunter
-Version:	1.4.2
+Version:	1.4.6
 Release:	1
 License:	GPLv2+
 Group:		System/Configuration/Other

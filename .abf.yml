@@ -1,5 +1,3 @@
-removed_sources:
-  rkhunter-1.4.0.tar.gz: 22546370647b79abce783d2a2d29352843d1b617
 sources:
-  rkhunter-1.4.2.tar.gz: da01bc6757e14549560ad6ea46d1e93dbf5ac90f
-  rkhunter-1.4.2.tar.gz.asc: 2a897f3abd73b49e70588e812314c56231c93457
+  rkhunter-1.4.6.tar.gz: bc6688c6cd01fd44da756bb5776110ad0c15ffbd
+  rkhunter-1.4.6.tar.gz.asc: 2fa9857d50455156cf64260a47f8fa499b3831fc

@@ -1,7 +1,7 @@
 Summary:	Rootkit scans for rootkits, backdoors and local exploits
 Name:		rkhunter
 Version:	1.4.6
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		System/Configuration/Other
 URL:		http://rkhunter.sourceforge.net/
@@ -9,11 +9,14 @@ Source0:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz
 Source1:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz.asc
 Source2:	rkhunter.cron
 Source3:	rkhunter.logrotate
+# https://issues.openmandriva.org/show_bug.cgi?id=2654
+Patch0:  %{name}-%{version}-omv.patch
 BuildArch:	noarch
+
 Requires:	binutils
 Requires:	e2fsprogs
 Requires:	webfetch
-Suggests:	unhide
+Recommends:	unhide
 
 %description
 Rootkit scanner is scanning tool to ensure you you're clean of known nasty 
@@ -29,6 +32,7 @@ tests like:
 %prep
 
 %setup -q
+%autopatch -p1
 chmod -R a+r .
 
 %build
@@ -65,12 +69,12 @@ ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia96xx-settings.1%{_extension}
 ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia96xx-xconfig.1%{_extension}
 ALLOWHIDDENFILE=/usr/share/man/man5/.k5login.5%{_extension}
 ALLOWHIDDENFILE=/usr/share/man/man5/.k5identity.5%{_extension}
-SCRIPTWHITELIST=/usr/bin/GET
+#SCRIPTWHITELIST=/usr/bin/GET
 SCRIPTWHITELIST=/usr/bin/groups
 SCRIPTWHITELIST=/usr/bin/ldd
 SCRIPTWHITELIST=/usr/bin/whatis
-SCRIPTWHITELIST=/sbin/ifup
-SCRIPTWHITELIST=/sbin/ifdown
+#SCRIPTWHITELIST=/sbin/ifup
+#SCRIPTWHITELIST=/sbin/ifdown
 ALLOWDEVFILE=/dev/shm/pulse-shm-*
 ALLOWDEVFILE=/dev/md/md-device-map
 # tomboy creates this one
@@ -113,5 +117,3 @@ fi
 %{_sbindir}/*
 %{_var}/lib/rkhunter
 %{_mandir}/man8/*
-
-

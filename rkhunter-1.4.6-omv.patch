@@ -1,0 +1,21 @@
+diff -uraN rkhunter-1.4.6/files/rkhunter.conf omv-rkhunter-1.4.6/files/rkhunter.conf
+--- rkhunter-1.4.6/files/rkhunter.conf	2018-02-20 00:49:06.000000000 +0100
++++ omv-rkhunter-1.4.6/files/rkhunter.conf	2020-10-22 18:22:51.429310304 +0200
+@@ -157,7 +157,7 @@
+ # subsequently commented out or removed, then the program will assume a
+ # default directory beneath the installation directory.
+ #
+-#TMPDIR=/var/lib/rkhunter/tmp
++TMPDIR=/var/lib/rkhunter/tmp
+ 
+ #
+ # This option specifies the database directory to use.
+@@ -166,7 +166,7 @@
+ # subsequently commented out or removed, then the program will assume a
+ # default directory beneath the installation directory.
+ #
+-#DBDIR=/var/lib/rkhunter/db
++DBDIR=/var/lib/rkhunter/db
+ 
+ #
+ # This option specifies the script directory to use.

@@ -9,7 +9,10 @@ Source0:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz
 Source1:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz.asc
 Source2:	rkhunter.cron
 Source3:	rkhunter.logrotate
+# https://issues.openmandriva.org/show_bug.cgi?id=2654
+Patch0:  %{name}-%{version}-omv.patch
 BuildArch:	noarch
+
 Requires:	binutils
 Requires:	e2fsprogs
 Requires:	webfetch
@@ -65,12 +68,12 @@ ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia96xx-settings.1%{_extension}
 ALLOWHIDDENFILE=/usr/share/man/man1/.nvidia96xx-xconfig.1%{_extension}
 ALLOWHIDDENFILE=/usr/share/man/man5/.k5login.5%{_extension}
 ALLOWHIDDENFILE=/usr/share/man/man5/.k5identity.5%{_extension}
-SCRIPTWHITELIST=/usr/bin/GET
+#SCRIPTWHITELIST=/usr/bin/GET
 SCRIPTWHITELIST=/usr/bin/groups
 SCRIPTWHITELIST=/usr/bin/ldd
 SCRIPTWHITELIST=/usr/bin/whatis
-SCRIPTWHITELIST=/sbin/ifup
-SCRIPTWHITELIST=/sbin/ifdown
+#SCRIPTWHITELIST=/sbin/ifup
+#SCRIPTWHITELIST=/sbin/ifdown
 ALLOWDEVFILE=/dev/shm/pulse-shm-*
 ALLOWDEVFILE=/dev/md/md-device-map
 # tomboy creates this one

@@ -32,6 +32,7 @@ tests like:
 %prep
 
 %setup -q
+%autopatch -p1
 chmod -R a+r .
 
 %build

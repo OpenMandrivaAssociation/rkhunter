@@ -16,7 +16,7 @@ BuildArch:	noarch
 Requires:	binutils
 Requires:	e2fsprogs
 Requires:	webfetch
-Suggests:	unhide
+Recommends:	unhide
 
 %description
 Rootkit scanner is scanning tool to ensure you you're clean of known nasty 
@@ -117,5 +117,3 @@ fi
 %{_sbindir}/*
 %{_var}/lib/rkhunter
 %{_mandir}/man8/*
-
-

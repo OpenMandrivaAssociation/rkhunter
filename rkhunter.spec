@@ -4,7 +4,7 @@ Version:	1.4.6
 Release:	2
 License:	GPLv2+
 Group:		System/Configuration/Other
-URL:		http://rkhunter.sourceforge.net/
+URL:		https://rkhunter.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz
 Source1:	http://downloads.sourceforge.net/rkhunter/%{name}-%{version}.tar.gz.asc
 Source2:	rkhunter.cron
